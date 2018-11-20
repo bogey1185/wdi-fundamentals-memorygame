@@ -40,6 +40,12 @@ a {
 	border-bottom: 2px solid transparent;
 }
 
+button {
+	font-family: raleway;
+	text-transform: uppercase;
+	font-weight: 800;
+}
+
 a:hover {
 	border-color: white;
 }

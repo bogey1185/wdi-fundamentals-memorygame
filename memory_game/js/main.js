@@ -23,26 +23,58 @@ var cards = [
 
 let cardsInPlay = [];
 
+function createBoard() {
+    for (let i = 0; i < cards.length; i++) {
+        let cardElement = document.createElement('img');
+        cardElement.setAttribute('src', 'images/back.png');
+        cardElement.setAttribute('data-id', i); 
+        cardElement.addEventListener('click', flipCard);
+        document.getElementById('game-board').appendChild(cardElement);
+    }
+}
+
 const checkForMatch = function() {
     if (cardsInPlay.length === 2) {
         if (cardsInPlay[0] === cardsInPlay[1]) {
-            // console.log('You found a match!');
             alert('You found a match!');
         } else {
-            // console.log('Sorry, try again.');
             alert('Sorry, try again.');
         }
     }
 }
 
-function flipCard(cardId) {
+function flipCard() {
+    let cardId = this.getAttribute('data-id');
     console.log('User flipped ' + cards[cardId].rank);
     cardsInPlay.push(cards[cardId].rank);
     console.log(cards[cardId].cardImage);
     console.log(cards[cardId].suit);
+    this.setAttribute('src', cards[cardId].cardImage);
     checkForMatch();
 }
 
-flipCard(0);
-flipCard(2);
+function removeElement() {
+	let divParent = document.getElementById('parent');
+	while (divParent.hasChildNodes()) {
+		divParent.removeChild(divParent.firstChild);
+	}
+}
 
+function createDiv() {
+	let newDiv = document.createElement('div');
+	newDiv.setAttribute('id', 'game-board');
+	newDiv.setAttribute('class', 'board clearfix');
+	document.getElementById('parent').appendChild(newDiv);
+}
+
+
+function resetBoard() {
+    cardsInPlay = [];
+    removeElement();
+    createDiv();
+    createBoard();
+}
+
+document.getElementsByTagName('button')[0].addEventListener('click', resetBoard);
+
+createBoard();
